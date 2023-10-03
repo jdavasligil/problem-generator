@@ -32,10 +32,10 @@ def generate_mixed_frac_prod(easy=False):
     easy -- whether or not the first denominator and second numerator cancel.
     """
     rnd.shuffle(primes)
-    n1 = rnd.select(non_uniform_dist)
-    d1 = rnd.select(non_uniform_dist)
-    n2 = d1 if easy else rnd.select(non_uniform_dist)
-    d2 = rnd.select(non_uniform_dist)
+    n1 = rnd.choice(non_uniform_dist)
+    d1 = rnd.choice(non_uniform_dist)
+    n2 = d1 if easy else rnd.choice(non_uniform_dist)
+    d2 = rnd.choice(non_uniform_dist)
     frac_1 = "\\frac{" + str(n1) + "}{" + str(d1) + "}"
     frac_2 = "\\frac{" + str(n2) + "}{" + str(d2) + "}"
     sep = " \\;\\; \\times \\;\\; "
