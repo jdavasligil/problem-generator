@@ -15,6 +15,7 @@ author = "Jaedin Davasligil"
 title = "Adding Fractions of Mixed Denominator"
 
 primes = [2,3,5,7]
+non_uniform_dist = [1,2,2,2,3,3,3,3,3,4,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,8,8,8,9,9,10,11,12]
 problem_types = [
         "frac_sum",
         "frac_prod",
@@ -31,10 +32,10 @@ def generate_mixed_frac_prod(easy=False):
     easy -- whether or not the first denominator and second numerator cancel.
     """
     rnd.shuffle(primes)
-    n1 = rnd.randint(1,7)
-    d1 = rnd.randint(1,12)
-    n2 = d1 if easy else rnd.randint(1,7)
-    d2 = rnd.randint(1,12)
+    n1 = rnd.select(non_uniform_dist)
+    d1 = rnd.select(non_uniform_dist)
+    n2 = d1 if easy else rnd.select(non_uniform_dist)
+    d2 = rnd.select(non_uniform_dist)
     frac_1 = "\\frac{" + str(n1) + "}{" + str(d1) + "}"
     frac_2 = "\\frac{" + str(n2) + "}{" + str(d2) + "}"
     sep = " \\;\\; \\times \\;\\; "
@@ -59,6 +60,9 @@ def generate_mixed_frac_sum(easy=False):
     return "\t\t" + frac_1 + sep + frac_2
 
 def write_document(writer, problem_type):
+    """Given a problem type, writes a LaTeX document which produces a 12
+       problem worksheet randomly according to the specified function.
+    """
     align_str_1 = " \\;\\; &= \\\\[.75in]\n"
     align_str_2 = " \\;\\; &= &\\\\[.75in]\n"
     problems_col_1 = []
