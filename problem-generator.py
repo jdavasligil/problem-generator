@@ -8,6 +8,7 @@ in the future for more types of problems as a CLI tool.
 
 Note: You need to use PDFLaTeX to generate the worksheet. I recommend Overleaf.
 """
+import sys, getopt
 import random as rnd
 
 primes = [2,3,5,7]
@@ -17,6 +18,23 @@ title = "Adding Fractions of Mixed Denominator"
 def schrodinger():
     """It's both True and False until you measure it."""
     return bool(rnd.randint(0,1))
+
+def generate_mixed_frac_prod(easy=False):
+    """Generates code for a mixed denominator fraction multiplication problem.
+
+    Keyword arguments:
+    easy -- whether or not the first denominator and second numerator cancel.
+    """
+    rnd.shuffle(primes)
+    n1 = rnd.randint(1,7)
+    d1 = rnd.randint(1,12)
+    n2 = d1 if easy else rnd.randint(1,7)
+    d2 = rnd.randint(1,12)
+    frac_1 = "\\frac{" + str(n1) + "}{" + str(d1) + "}"
+    frac_2 = "\\frac{" + str(n2) + "}{" + str(d2) + "}"
+    sep = " \\;\\; \\times \\;\\; "
+
+    return "\t\t" + frac_1 + sep + frac_2
 
 def generate_mixed_frac_sum(easy=False):
     """Generates code for a mixed denominator fraction addition problem.
