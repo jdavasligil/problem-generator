@@ -8,12 +8,17 @@ in the future for more types of problems as a CLI tool.
 
 Note: You need to use PDFLaTeX to generate the worksheet. I recommend Overleaf.
 """
-import sys, getopt
+import sys
 import random as rnd
 
-primes = [2,3,5,7]
 author = "Jaedin Davasligil"
 title = "Adding Fractions of Mixed Denominator"
+
+primes = [2,3,5,7]
+problem_types = [
+        "frac_sum",
+        "frac_prod",
+        ]
 
 def schrodinger():
     """It's both True and False until you measure it."""
@@ -53,15 +58,28 @@ def generate_mixed_frac_sum(easy=False):
 
     return "\t\t" + frac_1 + sep + frac_2
 
-def write_document(writer):
+def write_document(writer, problem_type):
     align_str_1 = " \\;\\; &= \\\\[.75in]\n"
     align_str_2 = " \\;\\; &= &\\\\[.75in]\n"
     problems_col_1 = []
     problems_col_2 = []
+    problem_func = None
+
+    match problem_type:
+
+        case "frac_sum":
+            problem_func = generate_mixed_frac_sum
+
+        case "frac_prod":
+            problem_func = generate_mixed_frac_prod
+
+        case _:
+            print("Error: problem_type invalid.")
+            sys.exit()
 
     for i in range(6):
-        problems_col_1.append(generate_mixed_frac_sum(schrodinger()) + align_str_1)
-        problems_col_2.append(generate_mixed_frac_sum(schrodinger()) + align_str_2)
+        problems_col_1.append(problem_func(schrodinger()) + align_str_1)
+        problems_col_2.append(problem_func(schrodinger()) + align_str_2)
 
     header = [
             "\\documentclass{article}\n",
@@ -103,6 +121,20 @@ def write_document(writer):
 
     writer.writelines(document)
 
+def validate_args():
+    if len(sys.argv) == 1:
+        print("Error: No problem type specified.")
+        sys.exit()
+
+    problem_type = sys.argv[1]
+
+    if not any(problem == problem_type for problem in problem_types):
+        print("Error: Problem type is not valid.")
+        sys.exit()
+
+    return problem_type
+
 if __name__ == "__main__":
+    problem_type = validate_args()
     with open('worksheet.tex', 'w') as writer:
-        write_document(writer)
+        write_document(writer, problem_type)
