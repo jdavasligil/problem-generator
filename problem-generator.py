@@ -10,16 +10,38 @@ Note: You need to use PDFLaTeX to generate the worksheet. I recommend Overleaf.
 """
 import sys
 import random as rnd
+from itertools import chain
 
 author = "Jaedin Davasligil"
-title = "Adding Fractions of Mixed Denominator"
 
-primes = [2,3,5,7]
-non_uniform_dist = [1] + 3*[2] + 5*[3] + 5*[4] + 4*[5] + 4*[6] + 3*[7] + 3*[8] + 2*[9] + [10,11,12]
+# Add more primes for more variety and challenge.
+primes = [2,3,5,7] 
+
+# Key: Number used in problem generator.
+# Val: Absolute frequency of that value occurring.
+num_dist_map = {
+        1:  1, 
+        2:  3,
+        3:  5,
+        4:  5,
+        5:  4,
+        6:  4,
+        7:  3,
+        8:  3,
+        9:  2,
+        10: 1, 
+        11: 1,
+        12: 1,
+        }
+non_uniform_dist = sum([[k] for k,v in num_dist_map.items()], []) # Flatten
 problem_types = [
         "frac_sum",
         "frac_prod",
         ]
+type_titles = {
+        problem_types[0]: "Adding Fractions of Mixed Denominator",
+        problem_types[1]: "Multiplying Fractions",
+        }
 
 def schrodinger():
     """It's both True and False until you measure it."""
@@ -80,6 +102,8 @@ def write_document(writer, problem_type):
         case _:
             print("Error: problem_type invalid.")
             sys.exit()
+
+    title = type_titles[problem_type]
 
     for i in range(6):
         problems_col_1.append(problem_func(schrodinger()) + align_str_1)
