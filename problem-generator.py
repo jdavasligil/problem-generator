@@ -15,7 +15,7 @@ author = "Jaedin Davasligil"
 title = "Adding Fractions of Mixed Denominator"
 
 primes = [2,3,5,7]
-non_uniform_dist = [1,2,2,2,3,3,3,3,3,4,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,8,8,8,9,9,10,11,12]
+non_uniform_dist = [1] + 3*[2] + 5*[3] + 5*[4] + 4*[5] + 4*[6] + 3*[7] + 3*[8] + 2*[9] + [10,11,12]
 problem_types = [
         "frac_sum",
         "frac_prod",
